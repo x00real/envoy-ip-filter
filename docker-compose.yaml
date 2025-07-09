@@ -1,0 +1,16 @@
+services:
+  proxy:
+    image: envoyproxy/envoy:contrib-dev
+    container_name: envoy
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml:ro
+      - ./lib/ip_filter.so:/lib/ip_filter.so:ro
+
+  http_echo:
+    image: ealen/echo-server:0.9.2
+    container_name: http_echo
+    ports:
+      - "8080:8080"
+    command: ["--port", "8080"]
